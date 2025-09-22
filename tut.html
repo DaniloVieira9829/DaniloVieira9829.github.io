@@ -1,0 +1,10 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<input id="qrInput" type="text" placeholder="Digite o link">
+<button onclick="generateQR()">Gerar QR</button>
+<div id="qrcode"></div>
+<script>
+function generateQR() {
+    const input = document.getElementById('qrInput').value;
+    new QRCode(document.getElementById('qrcode'), input);
+}
+</script>
