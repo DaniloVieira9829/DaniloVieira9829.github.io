@@ -1,0 +1,14 @@
+Para iniciar, use isso:
+
+pkg install python
+python -m http.server 8000
+
+Se não funcionar tente outras portas.
+
+
+To start use this:
+
+pkg install python
+python -m http.server 8000
+
+If it doesn't work, try other ports.
