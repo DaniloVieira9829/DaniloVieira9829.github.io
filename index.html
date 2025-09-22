@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gerador de QR Code gratuito e online. Crie QR Codes personalizados para links, textos e mais.">
+    <meta name="keywords" content="qr code, gerador qr code, criar qr code, qr code online">
+    <title>Gerador de QR Code Online Gratuito</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔗</text></svg>">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #8b5cf6;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1f2937;
+            --light: #f9fafb;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            margin: 20px 0;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .description {
+            color: #6b7280;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+        
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        
+        button {
+            padding: 14px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        #generateBtn {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        #generateBtn:hover {
+            background-color: #1d4ed8;
+        }
+        
+        #downloadBtn {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        #downloadBtn:hover {
+            background-color: #059669;
+        }
+        
+        #copyBtn {
+            background-color: var(--warning);
+            color: white;
+        }
+        
+        #copyBtn:hover {
+            background-color: #d97706;
+        }
+        
+        #qrcode {
+            margin: 25px 0;
+            display: flex;
+            justify-content: center;
+            min-height: 220px;
+            align-items: center;
+            background: #f9fafb;
+            border-radius: 10px;
+            padding: 15px;
+        }
+        
+        #message {
+            margin-top: 15px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-weight: 500;
+            text-align: center;
+        }
+        
+        .success {
+            color: #065f46;
+            background-color: #d1fae5;
+            border: 1px solid #a7f3d0;
+        }
+        
+        .error {
+            color: #991b1b;
+            background-color: #fee2e2;
+            border: 1px solid #fecaca;
+        }
+        
+        .loading {
+            color: #92400e;
+            background-color: #fef3c7;
+            border: 1px solid #fde68a;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+            font-size: 0.9rem;
+        }
+        
+        footer a {
+            color: white;
+            text-decoration: underline;
+        }
+        
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .share-button {
+            padding: 10px 15px;
+            background: white;
+            color: var(--dark);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .button-group {
+                grid-template-columns: 1fr;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔗 Gerador de QR Code</h1>
+            <p class="description">Crie QR Codes gratuitos para links, textos e muito mais!</p>
+        </header>
+        
+        <div class="input-group">
+            <input type="text" id="inputText" placeholder="Cole seu link ou digite um texto aqui..." autofocus>
+        </div>
+        
+        <div class="button-group">
+            <button id="generateBtn">
+                <span>Gerar QR Code</span>
+            </button>
+            <button id="downloadBtn">
+                <span>Baixar</span>
+            </button>
+            <button id="copyBtn">
+                <span>Copiar Texto</span>
+            </button>
+        </div>
+        
+        <div id="qrcode">
+            <p>Seu QR Code aparecerá aqui</p>
+        </div>
+        
+        <div id="message"></div>
+        
+        <div class="share-buttons">
+            <a href="#" class="share-button" id="shareTwitter">Compartilhar no Twitter</a>
+            <a href="#" class="share-button" id="shareWhatsApp">Compartilhar no WhatsApp</a>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Gerador de QR Code Online &copy; 2023 - <a href="#" id="viewSource">Código Fonte</a></p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos do DOM
+            const inputText = document.getElementById('inputText');
+            const qrcodeDiv = document.getElementById('qrcode');
+            const messageDiv = document.getElementById('message');
+            const generateBtn = document.getElementById('generateBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const copyBtn = document.getElementById('copyBtn');
+            const shareTwitter = document.getElementById('shareTwitter');
+            const shareWhatsApp = document.getElementById('shareWhatsApp');
+            const viewSource = document.getElementById('viewSource');
+            
+            let qrcode = null;
+            
+            // Verifica se a biblioteca QRCode está carregada
+            if (typeof QRCode === 'undefined') {
+                showMessage('Erro: Biblioteca QRCode não carregada. Verifique sua conexão com a internet.', 'error');
+                generateBtn.disabled = true;
+                downloadBtn.disabled = true;
+                return;
+            }
+            
+            // Event Listeners
+            generateBtn.addEventListener('click', generateQRCode);
+            downloadBtn.addEventListener('click', downloadQRCode);
+            copyBtn.addEventListener('click', copyText);
+            
+            // Compartilhar links
+            shareTwitter.addEventListener('click', shareOnTwitter);
+            shareWhatsApp.addEventListener('click', shareOnWhatsApp);
+            viewSource.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.open('https://github.com', '_blank');
+            });
+            
+            // Gerar QR Code ao pressionar Enter no input
+            inputText.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    generateQRCode();
+                }
+            });
+            
+            // Função para mostrar mensagens
+            function showMessage(text, type) {
+                messageDiv.innerText = text;
+                messageDiv.className = type;
+                // Limpar mensagem após 5 segundos
+                if (type === 'success') {
+                    setTimeout(() => {
+                        messageDiv.innerText = '';
+                        messageDiv.className = '';
+                    }, 5000);
+                }
+            }
+            
+            // Função para gerar QR Code
+            function generateQRCode() {
+                const text = inputText.value.trim();
+                qrcodeDiv.innerHTML = '';
+                
+                if (!text) {
+                    showMessage('Por favor, insira um link ou texto!', 'error');
+                    return;
+                }
+                
+                showMessage('Gerando QR Code...', 'loading');
+                
+                // Pequeno atraso para permitir que a mensagem seja exibida
+                setTimeout(() => {
+                    try {
+                        // Limpar qualquer QR Code anterior
+                        qrcodeDiv.innerHTML = '';
+                        
+                        // Criar novo QR Code
+                        qrcode = new QRCode(qrcodeDiv, {
+                            text: text,
+                            width: 200,
+                            height: 200,
+                            colorDark: "#000000",
+                            colorLight: "#ffffff",
+                            correctLevel: QRCode.CorrectLevel.H
+                        });
+                        
+                        showMessage('QR Code gerado com sucesso!', 'success');
+                        
+                        // Atualizar URLs de compartilhamento
+                        updateShareLinks(text);
+                    } catch (error) {
+                        console.error('Erro ao gerar QR Code:', error);
+                        showMessage('Erro ao gerar QR Code: ' + error.message, 'error');
+                    }
+                }, 100);
+            }
+            
+            // Função para baixar QR Code
+            function downloadQRCode() {
+                const canvas = qrcodeDiv.querySelector('canvas');
+                const img = qrcodeDiv.querySelector('img');
+                
+                if (!canvas && !img) {
+                    showMessage('Gere um QR Code primeiro!', 'error');
+                    return;
+                }
+                
+                try {
+                    let url;
+                    if (canvas) {
+                        url = canvas.toDataURL('image/png');
+                    } else if (img) {
+                        // Criar um canvas a partir da imagem
+                        const tempCanvas = document.createElement('canvas');
+                        const tempCtx = tempCanvas.getContext('2d');
+                        tempCanvas.width = img.width;
+                        tempCanvas.height = img.height;
+                        tempCtx.drawImage(img, 0, 0);
+                        url = tempCanvas.toDataURL('image/png');
+                    }
+                    
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = 'qrcode.png';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    showMessage('QR Code baixado com sucesso!', 'success');
+                } catch (error) {
+                    console.error('Erro ao baixar QR Code:', error);
+                    showMessage('Erro ao baixar QR Code. Tente novamente.', 'error');
+                }
+            }
+            
+            // Função para copiar texto
+            function copyText() {
+                const text = inputText.value.trim();
+                
+                if (!text) {
+                    showMessage('Nenhum texto para copiar!', 'error');
+                    return;
+                }
+                
+                // Método moderno usando Clipboard API
+                navigator.clipboard.writeText(text).then(() => {
+                    showMessage('Texto copiado para a área de transferência!', 'success');
+                }).catch((error) => {
+                    // Método alternativo para navegadores mais antigos
+                    console.error('Erro com Clipboard API:', error);
+                    
+                    // Método alternativo
+                    inputText.select();
+                    try {
+                        const successful = document.execCommand('copy');
+                        if (successful) {
+                            showMessage('Texto copiado para a área de transferência!', 'success');
+                        } else {
+                            throw new Error('Falha ao copiar');
+                        }
+                    } catch (err) {
+                        console.error('Erro ao copiar texto:', err);
+                        showMessage('Erro ao copiar texto. Tente novamente.', 'error');
+                    }
+                });
+            }
+            
+            // Funções de compartilhamento
+            function updateShareLinks(text) {
+                const url = encodeURIComponent(window.location.href);
+                const shareText = encodeURIComponent(`Confira este gerador de QR Code! Criei um QR Code para: ${text}`);
+                
+                shareTwitter.href = `https://twitter.com/intent/tweet?text=${shareText}&url=${url}`;
+                shareWhatsApp.href = `https://wa.me/?text=${shareText} ${url}`;
+            }
+            
+            function shareOnTwitter(e) {
+                e.preventDefault();
+                window.open(shareTwitter.href, '_blank');
+            }
+            
+            function shareOnWhatsApp(e) {
+                e.preventDefault();
+                window.open(shareWhatsApp.href, '_blank');
+            }
+            
+            // Inicialização
+            const urlParams = new URLSearchParams(window.location.search);
+            const textParam = urlParams.get('text');
+            if (textParam) {
+                inputText.value = decodeURIComponent(textParam);
+                generateQRCode();
+            }
+        });
+    </script>
+</body>
+</html>
